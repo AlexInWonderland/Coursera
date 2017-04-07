@@ -74,15 +74,12 @@ for i = 1:m
     temp_y = temp_y == y(i);
     temp_J = temp_J + sum(-temp_y' .* log( hOfx ) - (1 - temp_y') .* log( 1 - hOfx));
 endfor
-J = temp_J / m;
-%a1 = [ones(m,1) X];
-%z2 = (a1*Theta1');
-%      a2 = [ones(size(z2,1),1) sigmoid(z2)];
-%      h_theta = sigmoid(a2*Theta2');
-%                        a3 = h_theta;
-%                        y_matrix = eye(num_labels)(y,:);
-%                        J = (-sum(sum(y_matrix.*log(h_theta))) - sum(sum((1-y_matrix).*(log(1-h_theta)))))/m;
-
+theta1_temp = Theta1;
+theta2_temp = Theta2;
+theta1_temp(:,[1]) = [];
+theta2_temp(:,[1]) = [];
+reg_term = sum(sum(theta1_temp .^2)) + sum(sum(theta2_temp .^2));
+J = temp_J / m + lambda/(2*m) * reg_term;
 
 
 
