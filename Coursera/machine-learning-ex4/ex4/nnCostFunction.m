@@ -64,6 +64,7 @@ Theta2_grad = zeros(size(Theta2));
 
 X = [ones(m, 1) X];
 temp_J = 0;
+
 for i = 1:m
     a1 = X(i,:);
     z2 = Theta1 * a1';
@@ -74,6 +75,11 @@ for i = 1:m
     temp_y = 1 : num_labels;    % took me like two hours; you have to reset y in each iteration
     temp_y = temp_y == y(i);
     temp_J = temp_J + sum(-temp_y' .* log( hOfx ) - (1 - temp_y') .* log( 1 - hOfx));
+    delta3 = hOfx - temp_y';
+    theta2pxdelta3 = Theta2' * delta3;   % 26 x 1
+    delta2 = theta2pxdelta3(2:end) .* sigmoidGradient(z2);
+    Theta2_grad = Theta2_grad + delta3 * a2';
+    Theta1_grad = Theta1_grad + delta2 * a1;
 endfor
 theta1_temp = Theta1;
 theta2_temp = Theta2;
@@ -81,6 +87,8 @@ theta1_temp(:,[1]) = [];
 theta2_temp(:,[1]) = [];
 reg_term = sum(sum(theta1_temp .^2)) + sum(sum(theta2_temp .^2));
 J = temp_J / m + lambda/(2*m) * reg_term;
+Theta2_grad = Theta2_grad / m;
+Theta1_grad = Theta1_grad / m;
 
 
 
