@@ -87,8 +87,12 @@ theta1_temp(:,[1]) = [];
 theta2_temp(:,[1]) = [];
 reg_term = sum(sum(theta1_temp .^2)) + sum(sum(theta2_temp .^2));
 J = temp_J / m + lambda/(2*m) * reg_term;
-Theta2_grad = Theta2_grad / m;
-Theta1_grad = Theta1_grad / m;
+Theta1_Temp = Theta1;
+Theta2_Temp = Theta2;
+Theta2_Temp(:,[1]) = 0;
+Theta1_Temp(:,[1]) = 0;
+Theta2_grad = Theta2_grad / m + (lambda / m) * (Theta2_Temp);   %excluded j = 0
+Theta1_grad = Theta1_grad / m + (lambda / m) * (Theta1_Temp);
 
 
 
