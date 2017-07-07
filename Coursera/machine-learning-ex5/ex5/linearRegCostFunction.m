@@ -20,8 +20,8 @@ grad = zeros(size(theta));
 %
 temp = theta;
 temp(1) = 0;
-J = (1/(2*m))*sum((X * theta - y) .^2) + lambda*sum(temp.^2)/(2*m)
-grad = X'*(X * theta -y)/m + lambda*temp/m
+J = (1/(2*m))*sum((X * theta - y) .^2) + lambda*sum(temp.^2)/(2*m);
+grad = X'*(X * theta -y)/m + lambda*temp/m;
 %grad(1) = ((X*theta -y)'* X(:,1))/m;
 %grad(2) = ((X*theta -y)'* X(:,2))/m+lambda*temp(2)/m;
 
